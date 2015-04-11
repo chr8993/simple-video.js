@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="src/css/jquery.simple.css" />
+		<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	</head>
+	<body>
+		<div class="svContainer">
+			<video id="video">
+				<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+	  			<source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+			</video>
+			<div class="svControls">
+				<ul>
+					<li class="sPlay">
+						<div class="sCenter">
+							<i class="fa fa-play"></i>
+						</div>
+					</li>
+					<li class="sProgress">
+						<div class="sAlign">
+						    <div>                      
+						    	<span>00:03</span>                 
+						   </div>            
+						</div>                        
+						<div class="sBarAlign">                 
+							<div class="sBarProgress">                        
+								<div class="sBarPercent"></div>                  
+							</div>            
+						</div>        
+					</li>
+					<li class="sVolume">
+						<div class="sCenter">
+							<i class="fa fa-volume-up sVolumeControl"></i>
+							<i class="fa fa-expand sExpandControl"></i>
+						</div>
+					</li>
+					<li>
+					<div class="sClear"></div>
+				</ul>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script type="text/javascript" src="src/js/jquery.simple.js"></script>
+		<script>
+			$(document).ready(function(e){
+				$('#video').simpleVideo();
+			});
+		</script>
+	</body>
+</html>
