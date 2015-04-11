@@ -130,10 +130,11 @@
 	border-bottom-right-radius: 5px;
 	border-top-left-radius: 5px; 
 	border-bottom-left-radius: 5px;
+	overflow: hidden;
 }
 .svContainer .svControls .sBarProgress .sBarPercent
 {
-	width: 37%; 
+	width: 0%; 
 	border-top-left-radius: 5px; 
 	border-bottom-left-radius: 5px; 
 	height: 20px; 
