@@ -139,7 +139,9 @@
 	border-top-left-radius: 5px; 
 	border-bottom-left-radius: 5px;
 	overflow: hidden;
+	position: relative;
 }
+
 .svContainer .svControls .sBarProgress .sBarPercent
 {
 	width: 0%; 
@@ -147,4 +149,16 @@
 	border-bottom-left-radius: 5px; 
 	height: 20px; 
 	background-color: rgb(39, 174, 96);
+}
+.svContainer .svControls .sBarProgress .sBarBuffer
+{
+	width: 0%; 
+	border-top-left-radius: 5px; 
+	border-bottom-left-radius: 5px; 
+	height: 20px; 
+	background-color: rgb(39, 174, 96);
+	opacity: .5;
+	position: absolute;
+	left: 0px;
+	top: 0px;
 }

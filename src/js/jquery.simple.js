@@ -30,6 +30,7 @@
 	var _sTime		   =    document.createElement('span');
 	var _sBarAlign     =    document.createElement('div');
 	var _sBarProgress  =    document.createElement('div');
+	var _sBarBuffer	   = 	document.createElement('div');
 	var _sBarPercent   =    document.createElement('div');
 	var _sVolume	   =    document.createElement('li');
 	var _sCenterV	   =    document.createElement('div');
@@ -47,6 +48,7 @@
 	_sAlign.className 		 =    "sAlign";
 	_sBarAlign.className	 =    "sBarAlign";
 	_sBarProgress.className  =    "sBarProgress";
+	_sBarBuffer.className	 = 	  "sBarBuffer";
 	_sBarPercent.className 	 =    "sBarPercent";
 	_sVolume.className	     = 	  "sVolume";
 	_sCenterV.className		 = 	  "sCenter";
@@ -67,6 +69,7 @@
 	_sProgress.appendChild(_sBarAlign);
 	_sBarAlign.appendChild(_sBarProgress);
 	_sBarProgress.appendChild(_sBarPercent);
+	_sBarProgress.appendChild(_sBarBuffer);
 	_ul.appendChild(_sVolume);
 	_sVolume.appendChild(_sCenterV);
 	_sCenterV.appendChild(_volumeButton);
@@ -179,8 +182,8 @@
 		//set time text
 		var minutes = Math.floor(seconds/60);
 		var remainder = Math.floor(seconds - (minutes * 60));
-		var time = ((minutes < 10) ? '0' + minutes : minutes) + ":" +
-				   ((remainder < 10) ? '0' + remainder: remainder); 
+		var time = ((minutes < 10) ? '0' + minutes : minutes) 
+				+ ":" + ((remainder < 10) ? '0' + remainder: remainder); 
 		_sTime.innerHTML = time;
 
 
@@ -190,7 +193,7 @@
 		//update buffered percent
 		var buff = _sVideo.buffered;
         var buffer_percent = Math.round((buff.end(0)/_sVideo.duration)*100);
-        
+        $(_sBarBuffer).css('width', buffer_percent + "%");
 	}	
 	
 	//load sources
