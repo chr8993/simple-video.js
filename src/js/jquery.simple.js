@@ -176,15 +176,21 @@
 		if(seconds > 3600){
 
 		}
+		//set time text
 		var minutes = Math.floor(seconds/60);
 		var remainder = Math.floor(seconds - (minutes * 60));
-		
 		var time = ((minutes < 10) ? '0' + minutes : minutes) + ":" +
 				   ((remainder < 10) ? '0' + remainder: remainder); 
 		_sTime.innerHTML = time;
 
+
 		var percent = Math.round((seconds/_sVideo.duration) * 100);
 		$(_sBarPercent).css('width', percent + '%');
+
+		//update buffered percent
+		var buff = _sVideo.buffered;
+        var buffer_percent = Math.round((buff.end(0)/_sVideo.duration)*100);
+        
 	}	
 	
 	//load sources
@@ -217,6 +223,6 @@
 	_sBarProgress.addEventListener('click', el.skip, false);
 
 	//show controls on hover
-	_sVideo.addEventListener('mouseover', el.showControls, false);
-	_sVideo.addEventListener('mouseout', el.hideControls, false);
+	current.addEventListener('mouseover', el.showControls, false);
+	current.addEventListener('mouseout', el.hideControls, false);
  }

@@ -21,7 +21,6 @@
 	width: 90%;
 	position: absolute;
 	opacity: 0;
-	display: none;
 	height: 60px;
 	border-radius: 12px;
 	-webkit-border-radius: 12px;
@@ -32,11 +31,13 @@
 	left: 50%;
 	margin-left: -45%;
 	right: 0px;
+	transition: ease 500ms;
+	-webkit-transition: ease 500ms;
+	-moz-transition: ease 500ms;
 }
 .svContainer .svControls.active
 {
 	opacity: 1;
-	display: block;
 }
 .svContainer .svControls ul
 {
