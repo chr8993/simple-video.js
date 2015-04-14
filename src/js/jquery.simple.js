@@ -15,6 +15,7 @@
 	
 	var el          = 	this;
 	var current 	= 	el[0]; //current node
+	var timeHide 	=   null; //for controls
 
 	//create nodes
 	var _sVideo 	   =	document.createElement('video');
@@ -114,6 +115,23 @@
 
 	}
 
+	//show controls
+	el.showControls = function(e)
+	{
+       e.preventDefault();
+       clearTimeout(timeHide);
+       $(_sControls).addClass('active');
+	}
+
+	//hide controls
+	el.hideControls = function(e)
+	{
+		e.preventDefault();
+	    timeHide = setTimeout(function(){ 
+	        $(_sControls).removeClass('active');
+	    }, 500); 
+	}
+
 	//skip to #seconds
 	el.skip = function(e)
 	{
@@ -129,6 +147,12 @@
 
 	//toggles the volume bar from showing
 	el.toggleVolume = function()
+	{
+
+	}
+
+	//changes the volume
+	el.changeVolume = function()
 	{
 
 	}
@@ -192,4 +216,7 @@
 	_sVideo.onended = el.stop;
 	_sBarProgress.addEventListener('click', el.skip, false);
 
+	//show controls on hover
+	_sVideo.addEventListener('mouseover', el.showControls, false);
+	_sVideo.addEventListener('mouseout', el.hideControls, false);
  }
