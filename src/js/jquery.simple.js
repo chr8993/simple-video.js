@@ -91,7 +91,6 @@
 	el.init  = function()
 	{
 		//display loading screen
-
 		//load sources
 		el.loadSources(sources);
 	} 
@@ -138,6 +137,19 @@
 	    }, 500); 
 	}
 
+	//toggles fullscreen mode
+	el.toggleFullScreen = function(e)
+	{
+		if(_sVideo.webkitRequestFullScreen)
+		{
+			_sVideo.webkitRequestFullScreen();
+		}
+		else if(_sVideo.mozRequestFullScreen)
+		{
+			_sVideo.mozRequestFullScreen();
+		}
+
+	}
 	//skip to #seconds
 	el.skip = function(e)
 	{
@@ -230,6 +242,7 @@
 	_sPlay.addEventListener('click', el.toggleState, false);
 	_volumeButton.addEventListener('click', el.toggleVolume, false);
 	_sVolumeControl.addEventListener('click', el.changeVolume, false);
+	_expandButton.addEventListener('click', el.toggleFullScreen, false);
 	_sVideo.ontimeupdate = el.updateTime;
 	_sVideo.onended = el.stop;
 	_sBarProgress.addEventListener('click', el.skip, false);

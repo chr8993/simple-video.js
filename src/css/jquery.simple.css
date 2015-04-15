@@ -194,7 +194,9 @@
 	width: 0%; 
 	border-top-left-radius: 5px; 
 	border-bottom-left-radius: 5px; 
+	z-index: 0;
 	height: 20px; 
+	max-width: 100%;
 	background-color: rgb(39, 174, 96);
 	opacity: .5;
 	position: absolute;
