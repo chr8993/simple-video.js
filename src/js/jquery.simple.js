@@ -183,12 +183,12 @@
 	//show loading
 	el.showLoader = function()
 	{
-
+		$(_sBarProgress).addClass('loading');
 	}
 	//hide loading screen
 	el.hideLoader = function()
 	{
-
+		$(_sBarProgress).removeClass('loading');
 	}
 
 	//updates time text
@@ -245,6 +245,8 @@
 	_expandButton.addEventListener('click', el.toggleFullScreen, false);
 	_sVideo.ontimeupdate = el.updateTime;
 	_sVideo.onended = el.stop;
+	_sVideo.onseeking = el.showLoader;
+	_sVideo.onseeked = el.hideLoader;
 	_sBarProgress.addEventListener('click', el.skip, false);
 	//show controls on hover
 	current.addEventListener('mouseover', el.showControls, false);
