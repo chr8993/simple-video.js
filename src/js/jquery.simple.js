@@ -153,7 +153,7 @@
 	//skip to #seconds
 	el.skip = function(e)
 	{
-		var left = e.offsetX;
+		var left = (e.offsetX) ? e.offsetX : e.layerX;
 		var w = $(_sBarProgress).width();
 		var percent = left/w;
 
@@ -173,7 +173,7 @@
 	el.changeVolume = function(e)
 	{
 		//get offset set to volume
-		var height = e.offsetY;
+		var height = (e.offsetY) ? e.offsetY : e.layerY;
 		$(_sVolumeBar).css('height', height + '%');
 		var volume = Math.abs(100 - height);
 		volume = volume/100;
