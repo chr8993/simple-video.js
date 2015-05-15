@@ -1,1 +1,254 @@
-$.fn.simpleVideo=function(e,a,n){var t=this,l=t[0],d=null,s=document.createElement("video"),o=document.createElement("div"),c=document.createElement("ul"),i=document.createElement("li"),r=document.createElement("div"),m=document.createElement("i"),u=document.createElement("li"),p=document.createElement("div"),f=document.createElement("div"),h=document.createElement("span"),v=document.createElement("div"),C=document.createElement("div"),E=document.createElement("div"),g=document.createElement("div"),N=document.createElement("li"),L=document.createElement("div"),k=document.createElement("div"),S=document.createElement("div"),V=document.createElement("div"),w=document.createElement("i"),y=document.createElement("i");l.className="svContainer",s.className="sVideo",o.className="svControls",i.className="sPlay",r.className="sCenter",m.className="fa fa-play",u.className="sProgress",p.className="sAlign",v.className="sBarAlign",C.className="sBarProgress",E.className="sBarBuffer",g.className="sBarPercent",N.className="sVolume",L.className="sCenter",k.className="sVolumeControl",S.className="sVolumeCon",V.className="sVolumeBar",w.className="fa fa-volume-up",y.className="fa fa-expand",l.appendChild(s),l.appendChild(o),o.appendChild(c),c.appendChild(i),i.appendChild(r),r.appendChild(m),c.appendChild(u),u.appendChild(p),p.appendChild(f),f.appendChild(h),u.appendChild(v),v.appendChild(C),C.appendChild(g),C.appendChild(E),c.appendChild(N),N.appendChild(L),L.appendChild(k),k.appendChild(S),S.appendChild(V),L.appendChild(w),L.appendChild(y),h.innerHTML="00:00",t.init=function(){t.loadSources(e)},t.play=function(){s.play(),m.className="fa fa-pause"},t.stop=function(){s.pause(),m.className="fa fa-play"},t.toggleState=function(){s.paused?t.play():t.stop()},t.showControls=function(e){e.preventDefault(),clearTimeout(d),$(o).addClass("active")},t.hideControls=function(e){e.preventDefault(),d=setTimeout(function(){$(o).removeClass("active")},500)},t.toggleFullScreen=function(e){s.webkitRequestFullScreen?s.webkitRequestFullScreen():s.mozRequestFullScreen&&s.mozRequestFullScreen()},t.skip=function(e){var a=e.offsetX?e.offsetX:e.layerX,n=$(C).width(),t=a/n,l=Math.round(s.duration*t);s.currentTime=l},t.toggleVolume=function(){$(k).toggleClass("active")},t.changeVolume=function(e){var a=e.offsetY?e.offsetY:e.layerY;$(V).css("height",a+"%");var n=Math.abs(100-a);n/=100,s.volume=n},t.showLoader=function(){$(C).addClass("loading")},t.hideLoader=function(){$(C).removeClass("loading")},t.updateTime=function(){var e=s.currentTime,a=Math.floor(e/60),n=Math.floor(e-60*a),t=(10>a?"0"+a:a)+":"+(10>n?"0"+n:n);h.innerHTML=t;var l=Math.round(e/s.duration*100);$(g).css("width",l+"%");var d=s.buffered,o=Math.round(d.end(0)/s.duration*100);$(E).css("width",o+"%")},t.loadSources=function(e){for(var a=0,n=0;n<e.length;n++){var t=e[n];if(t&&3>a){var l=document.createElement("source");l.src=t,s.appendChild(l),a++}}},t.init(),i.addEventListener("click",t.toggleState,!1),w.addEventListener("click",t.toggleVolume,!1),k.addEventListener("click",t.changeVolume,!1),y.addEventListener("click",t.toggleFullScreen,!1),s.ontimeupdate=t.updateTime,s.onended=t.stop,s.onseeking=t.showLoader,s.onseeked=t.hideLoader,C.addEventListener("click",t.skip,!1),l.addEventListener("mouseover",t.showControls,!1),l.addEventListener("mouseout",t.hideControls,!1)};
+/*
+ * Simple Video Player for JQuery Javascript Library
+ * http://www.christiangomez.me/projects/3
+ *
+ * Copyright (c) 2014 - 2015
+ * Licensed under the MIT license.
+ * http://opensource.org/licenses/MIT
+ *
+ * Author: Christian Gomez
+ * Version: 1.0.0.2
+ * Date: 11th April 2015
+ */
+
+ $.fn.simpleVideo = function(sources, options, callback) {
+	
+	var el          = 	this;
+	var current 	= 	el[0]; //current node
+	var timeHide 	=   null; //for controls
+
+	//create nodes
+	var _sVideo 	     =	  document.createElement('video');
+	var _sControls       = 	  document.createElement('div');
+	var _ul 		     =    document.createElement('ul');
+	var _sPlay           =    document.createElement('li');
+	var _sCenterP 	     =    document.createElement('div');
+	var _playButton      =    document.createElement('i');
+	var _sProgress	     =    document.createElement('li');
+	var _sAlign          =    document.createElement('div');
+	var _sAlignDiv       =    document.createElement('div');
+	var _sTime		     =    document.createElement('span');
+	var _sBarAlign       =    document.createElement('div');
+	var _sBarProgress    =    document.createElement('div');
+	var _sBarBuffer	     = 	  document.createElement('div');
+	var _sBarPercent     =    document.createElement('div');
+	var _sVolume	     =    document.createElement('li');
+	var _sCenterV	     =    document.createElement('div');
+	var _sVolumeControl  = 	  document.createElement('div');
+	var _sVolumeCon      = 	  document.createElement('div');
+	var _sVolumeBar      = 	  document.createElement('div');
+	var _volumeButton    =    document.createElement('i');
+	var _expandButton    =    document.createElement('i');
+
+	//assign class names
+	current.className	       =    "svContainer";
+	_sVideo.className          =    "sVideo";
+	_sControls.className       =	"svControls";
+	_sPlay.className		   =    "sPlay";
+	_sCenterP.className		   = 	"sCenter";
+	_playButton.className	   =    "fa fa-play";
+	_sProgress.className 	   =    "sProgress";
+	_sAlign.className 		   =    "sAlign";
+	_sBarAlign.className	   =    "sBarAlign";
+	_sBarProgress.className    =    "sBarProgress";
+	_sBarBuffer.className	   = 	"sBarBuffer";
+	_sBarPercent.className 	   =    "sBarPercent";
+	_sVolume.className	       = 	"sVolume";
+	_sCenterV.className		   = 	"sCenter";
+	_sVolumeControl.className  = 	"sVolumeControl";
+	_sVolumeCon.className      = 	"sVolumeCon";
+	_sVolumeBar.className	   =    "sVolumeBar";
+	_volumeButton.className	   =    "fa fa-volume-up";
+	_expandButton.className	   =    "fa fa-expand";
+
+	//append children
+	current.appendChild(_sVideo);
+	current.appendChild(_sControls);
+	_sControls.appendChild(_ul);
+	_ul.appendChild(_sPlay);
+	_sPlay.appendChild(_sCenterP);
+	_sCenterP.appendChild(_playButton);
+	_ul.appendChild(_sProgress);
+	_sProgress.appendChild(_sAlign);
+	_sAlign.appendChild(_sAlignDiv);
+	_sAlignDiv.appendChild(_sTime);
+	_sProgress.appendChild(_sBarAlign);
+	_sBarAlign.appendChild(_sBarProgress);
+	_sBarProgress.appendChild(_sBarPercent);
+	_sBarProgress.appendChild(_sBarBuffer);
+	_ul.appendChild(_sVolume);
+	_sVolume.appendChild(_sCenterV);
+	_sCenterV.appendChild(_sVolumeControl);
+	_sVolumeControl.appendChild(_sVolumeCon);
+	_sVolumeCon.appendChild(_sVolumeBar);
+	_sCenterV.appendChild(_volumeButton);
+	_sCenterV.appendChild(_expandButton);
+
+
+	_sTime.innerHTML = "00:00";
+
+	/* Initialize Video Player */
+	el.init  = function()
+	{
+		//display loading screen
+		//load sources
+		el.loadSources(sources);
+	} 
+
+	//play video
+	el.play = function()
+	{
+		_sVideo.play();
+		_playButton.className = "fa fa-pause";
+	}
+
+	//stop video playing
+	el.stop  = function()
+	{
+		_sVideo.pause();
+		_playButton.className = "fa fa-play";
+	}
+
+	//toggles video play state
+	el.toggleState = function()
+	{
+		if(_sVideo.paused){
+			el.play();
+		}
+		else {
+			el.stop();
+		}
+	}
+
+	//show controls
+	el.showControls = function(e)
+	{
+       e.preventDefault();
+       clearTimeout(timeHide);
+       $(_sControls).addClass('active');
+	}
+
+	//hide controls
+	el.hideControls = function(e)
+	{
+		e.preventDefault();
+	    timeHide = setTimeout(function(){ 
+	        $(_sControls).removeClass('active');
+	    }, 500); 
+	}
+
+	//toggles fullscreen mode
+	el.toggleFullScreen = function(e)
+	{
+		if(_sVideo.webkitRequestFullScreen)
+		{
+			_sVideo.webkitRequestFullScreen();
+		}
+		else if(_sVideo.mozRequestFullScreen)
+		{
+			_sVideo.mozRequestFullScreen();
+		}
+
+	}
+	//skip to #seconds
+	el.skip = function(e)
+	{
+		var left = (e.offsetX) ? e.offsetX : e.layerX;
+		var w = $(_sBarProgress).width();
+		var percent = left/w;
+
+		var seconds = Math.round(_sVideo.duration * percent);
+
+		//show buffering
+		_sVideo.currentTime = seconds;
+	}
+
+	//toggles the volume bar from showing
+	el.toggleVolume = function()
+	{
+		$(_sVolumeControl).toggleClass('active');
+	}
+
+	//changes the volume
+	el.changeVolume = function(e)
+	{
+		//get offset set to volume
+		var height = (e.offsetY) ? e.offsetY : e.layerY;
+		$(_sVolumeBar).css('height', height + '%');
+		var volume = Math.abs(100 - height);
+		volume = volume/100;
+		_sVideo.volume = volume;
+	}
+
+	//show loading
+	el.showLoader = function()
+	{
+		$(_sBarProgress).addClass('loading');
+	}
+	//hide loading screen
+	el.hideLoader = function()
+	{
+		$(_sBarProgress).removeClass('loading');
+	}
+
+	//updates time text
+	el.updateTime = function()
+	{
+		var seconds = _sVideo.currentTime;
+		//greater than 60 mins
+		if(seconds > 3600){
+
+		}
+		//set time text
+		var minutes = Math.floor(seconds/60);
+		var remainder = Math.floor(seconds - (minutes * 60));
+		var time = ((minutes < 10) ? '0' + minutes : minutes) 
+				+ ":" + ((remainder < 10) ? '0' + remainder: remainder); 
+		_sTime.innerHTML = time;
+
+
+		var percent = Math.round((seconds/_sVideo.duration) * 100);
+		$(_sBarPercent).css('width', percent + '%');
+
+		//update buffered percent
+		var buff = _sVideo.buffered;
+        var buffer_percent = Math.round((buff.end(0)/_sVideo.duration)*100);
+        $(_sBarBuffer).css('width', buffer_percent + "%");
+	}	
+	
+	//load sources
+	//accepts array of tracks
+	el.loadSources = function(tracks) 
+	{
+		//load all tracks
+		var max = 0;
+		for(var i = 0; i < tracks.length; i++){
+			var track = tracks[i];
+			if(track){
+				//create source nodes
+				if(max < 3){
+					var s = document.createElement('source');
+					//append to video node
+					s.src = track;
+					_sVideo.appendChild(s);
+					max++;
+				}
+			}
+		}
+
+	}
+	el.init();
+	/* Event Listeners */
+	_sPlay.addEventListener('click', el.toggleState, false);
+	_volumeButton.addEventListener('click', el.toggleVolume, false);
+	_sVolumeControl.addEventListener('click', el.changeVolume, false);
+	_expandButton.addEventListener('click', el.toggleFullScreen, false);
+	_sVideo.ontimeupdate = el.updateTime;
+	_sVideo.onended = el.stop;
+	_sVideo.onseeking = el.showLoader;
+	_sVideo.onseeked = el.hideLoader;
+	_sBarProgress.addEventListener('click', el.skip, false);
+	//show controls on hover
+	current.addEventListener('mouseover', el.showControls, false);
+	current.addEventListener('mouseout', el.hideControls, false);
+ }
